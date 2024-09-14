@@ -1,7 +1,5 @@
 package ru.yandex.taskmanager.task;
 
-import ru.yandex.taskmanager.models.TaskType;
-
 public class SubTask extends Task {
     protected int parentId;
 
