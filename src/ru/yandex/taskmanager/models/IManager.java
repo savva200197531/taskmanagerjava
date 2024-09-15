@@ -10,7 +10,7 @@ public interface IManager {
     void clearTasks();
     int getCurrentId();
     void setCurrentId();
-    Task getTaskById(int id);
     void updateTask(Task task);
     List<Task> getTasksByEpicId(int epicId);
+    Task getTask(int id);
 }

@@ -8,35 +8,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Manager implements IManager {
+public class InMemoryTaskManager implements IManager {
     HashMap<Integer, Task> tasks;
     protected int currentId;
+    HistoryManager historyManager;
 
-    public Manager() {
+    public InMemoryTaskManager(HistoryManager historyManager) {
         currentId = 0;
         tasks = new HashMap<>();
+        this.historyManager = historyManager;
     }
 
+    @Override
     public void addTask(Task task) {
         tasks.put(task.getId(), task);
         this.setCurrentId();
     }
 
+    @Override
     public void printAllTasks() {
         for (Task task : tasks.values()) {
             System.out.println(task.getId() + " " + task.getName() + " " + task.getDescription());
         }
     }
 
+    @Override
     public void clearTasks() {
         tasks.clear();
         this.setCurrentId(0);
     }
 
+    @Override
     public int getCurrentId() {
         return currentId;
     }
 
+    @Override
     public void setCurrentId() {
         this.currentId += 1;
     }
@@ -44,10 +51,19 @@ public class Manager implements IManager {
         this.currentId = currentId;
     }
 
-    public Task getTaskById(int id) {
+    private Task getTaskById(int id) {
         return tasks.get(id);
     }
 
+    @Override
+    public Task getTask(int id) {
+        Task task = this.getTaskById(id);
+
+        this.historyManager.setHistory(task);
+        return task;
+    }
+
+    @Override
     public void updateTask(Task task) {
         tasks.put(task.getId(), task);
 
@@ -56,7 +72,9 @@ public class Manager implements IManager {
         }
     }
 
+    @Override
     public List<Task> getTasksByEpicId(int epicId) {
+
         List<Task> tasksByEpicId = tasks.values().stream().filter(task -> task instanceof SubTask && ((SubTask) task).getParentId() == epicId).collect(Collectors.toList());
 
         return tasksByEpicId;
