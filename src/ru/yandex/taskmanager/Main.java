@@ -47,7 +47,8 @@ public class Main {
 
         currentTask = inMemoryTaskManager.getTask(1);
 
-        System.out.println(Arrays.toString(historyManager.getHistory()));
+        ;
+
         System.out.println(currentTask);
 
 
@@ -70,7 +71,14 @@ public class Main {
         inMemoryTaskManager.updateTask(subTask4);
         inMemoryTaskManager.updateTask(subTask5);
 
-        System.out.println(tasksByEpicId);
+        inMemoryTaskManager.getTask(3);
+        inMemoryTaskManager.getTask(3);
+        inMemoryTaskManager.getTask(3);
+
+
+        System.out.println(historyManager.getHistory());
+
+//        System.out.println(tasksByEpicId);
 
 //        manager.printAllTasks();
 //

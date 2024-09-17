@@ -5,6 +5,6 @@ import ru.yandex.taskmanager.task.Task;
 import java.util.List;
 
 public interface IHistory {
-    Task[] getHistory();
+    List<Task> getHistory();
     void setHistory(Task history);
 }
