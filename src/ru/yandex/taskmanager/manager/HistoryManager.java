@@ -3,33 +3,32 @@ package ru.yandex.taskmanager.manager;
 import ru.yandex.taskmanager.models.IHistory;
 import ru.yandex.taskmanager.task.Task;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class HistoryManager implements IHistory {
     static public int MAX_LIST_SIZE = 10;
-    private LinkedList<Task> tasksLinkedList = new LinkedList<>();
-    private Map<Integer, Task> historyTaskLink = new HashMap<>();
+    private LinkedHashMap<Integer, Task> tasksLinkedHashMap = new LinkedHashMap<>();
 
     @Override
     public List<Task> getHistory() {
-        return tasksLinkedList.subList(0, tasksLinkedList.size());
+        return new ArrayList<>(tasksLinkedHashMap.values());
     }
 
     @Override
     public void setHistory(Task task) {
-        if (historyTaskLink.containsKey(task.getId())) {
-            Task linkedTask = historyTaskLink.get(task.getId());
-            tasksLinkedList.remove(linkedTask);
-        }
+        int taskId = task.getId();
 
-        historyTaskLink.put(task.getId(), task);
-        tasksLinkedList.addFirst(task);
+        tasksLinkedHashMap.remove(taskId);
+        tasksLinkedHashMap.put(taskId, task);
 
-        if (tasksLinkedList.size() >= HistoryManager.MAX_LIST_SIZE) {
-            tasksLinkedList.removeLast();
+
+        if (tasksLinkedHashMap.size() >= HistoryManager.MAX_LIST_SIZE) {
+            Task i = (Task) tasksLinkedHashMap.entrySet().toArray()[tasksLinkedHashMap.size() -1];
+            tasksLinkedHashMap.remove(i.getId());
+            tasksLinkedHashMap.remove(0);
         }
     }
 }

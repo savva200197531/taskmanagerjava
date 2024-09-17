@@ -54,29 +54,34 @@ public class Main {
 
         List<Task> tasksByEpicId = inMemoryTaskManager.getTasksByEpicId(1);
         inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
-        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
+//        inMemoryTaskManager.getTask(1);
 
         subTask4.setStatus(TaskStatus.DONE);
         subTask5.setStatus(TaskStatus.DONE);
         inMemoryTaskManager.updateTask(subTask4);
         inMemoryTaskManager.updateTask(subTask5);
 
-        inMemoryTaskManager.getTask(3);
-        inMemoryTaskManager.getTask(3);
+//        inMemoryTaskManager.getTask(3);
+//        inMemoryTaskManager.getTask(3);
         inMemoryTaskManager.getTask(3);
 
+        inMemoryTaskManager.getTask(4);
 
-        System.out.println(historyManager.getHistory());
+
+
+        for (Task history: historyManager.getHistory()) {
+            System.out.println("" + history.getId() + history.getDescription() + history.getName());
+        }
 
 //        System.out.println(tasksByEpicId);
 
