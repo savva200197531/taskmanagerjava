@@ -4,6 +4,7 @@ import ru.yandex.taskmanager.models.TaskStatus;
 import ru.yandex.taskmanager.task.SubTask;
 import ru.yandex.taskmanager.task.Task;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class InMemoryTaskManager implements IManager {
     }
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(Task task) throws IOException {
         tasks.put(task.getId(), task);
         this.setCurrentId();
     }

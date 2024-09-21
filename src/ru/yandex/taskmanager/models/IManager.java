@@ -2,10 +2,11 @@ package ru.yandex.taskmanager.models;
 
 import ru.yandex.taskmanager.task.Task;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IManager {
-    void addTask(Task task);
+    void addTask(Task task) throws IOException;
     void printAllTasks();
     void clearTasks();
     int getCurrentId();
