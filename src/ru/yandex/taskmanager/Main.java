@@ -19,6 +19,7 @@ import java.util.Objects;
 public class Main {
     private static final String HOME = System.getProperty("user.home");
 
+//    TODO добавить считывание с файла
     public static void main(String[] args) throws IOException {
         HistoryManager historyManager = Managers.getDefaultHistory();
         InMemoryTaskManager inMemoryTaskManager = Managers.getDefault(historyManager);
