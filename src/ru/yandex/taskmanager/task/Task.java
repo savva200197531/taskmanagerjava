@@ -26,6 +26,14 @@ public class Task {
         this.status = TaskStatus.TO_DO;
     }
 
+    public Task(String name, String description, int id, TaskType type, TaskStatus status) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.type = type;
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }

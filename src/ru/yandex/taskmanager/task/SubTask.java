@@ -1,5 +1,6 @@
 package ru.yandex.taskmanager.task;
 
+import ru.yandex.taskmanager.models.TaskStatus;
 import ru.yandex.taskmanager.models.TaskType;
 
 public class SubTask extends Task {
@@ -10,12 +11,17 @@ public class SubTask extends Task {
         this.parentId = parentId;
     }
 
+    public SubTask(String name, String description, int id, int parentId, TaskType type, TaskStatus status) {
+        super(name, description, id, type, status);
+        this.parentId = parentId;
+    }
+
     public int getParentId() {
         return parentId;
     }
 
     @Override
     public String toString() {
-        return this.getId() + "," + this.getType() + this.getName() + "," + this.getStatus() + "," + this.getDescription() + "," + this.getParentId() + '\n';
+        return this.getId() + "," + this.getType() + "," + this.getName() + "," + this.getStatus() + "," + this.getDescription() + "," + this.getParentId() + '\n';
     };
 }
