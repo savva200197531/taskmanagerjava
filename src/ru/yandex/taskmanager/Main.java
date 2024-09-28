@@ -72,7 +72,9 @@ public class Main {
 //        List<Task> tasksByEpicId = fileTaskManager.getTasksByEpicId(1);
         fileTaskManager.getTask(1);
         fileTaskManager.getTask(2);
-        fileTaskManager.getTask(0);
+        Task task0 = fileTaskManager.getTask(0);
+
+        System.out.println(task0.getEndTime());
 //        fileTaskManager.getTask(1);
 //        fileTaskManager.getTask(1);
 //        fileTaskManager.getTask(1);

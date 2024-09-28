@@ -93,6 +93,10 @@ public class Task {
         this.status = status;
     }
 
+    public LocalDateTime getEndTime() {
+        return this.getStartTime().plus(this.getDuration());
+    }
+
     @Override
     public String toString() {
         Long duration = this.getDuration().getSeconds() / 60;
