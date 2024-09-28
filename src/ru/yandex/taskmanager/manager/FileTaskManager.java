@@ -13,13 +13,24 @@ import java.nio.file.Paths;
 
 
 public class FileTaskManager extends InMemoryTaskManager {
-    public static final String filePath = "src/ru/yandex/taskmanager/filedb/task.csv";
-    Path tasksFile = Paths.get(filePath);
+    private String filePath;
+    Path tasksFile;
 
-    public FileTaskManager(HistoryManager historyManager) throws IOException {
+    public FileTaskManager(HistoryManager historyManager, String filePath) throws IOException {
         super(historyManager);
 
+        this.filePath = filePath.isEmpty() ? "src/ru/yandex/taskmanager/filedb/task.csv" : filePath;
+        this.tasksFile = Paths.get(this.filePath);
+
         getTasksFromFile();
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
 
@@ -56,8 +67,6 @@ public class FileTaskManager extends InMemoryTaskManager {
     }
 
     private void getTasksFromFile() {
-        System.out.println("get tasks from file");
-
         try (Reader fileReader = new FileReader(String.valueOf(tasksFile))) {
             BufferedReader br = new BufferedReader(fileReader);
 
@@ -67,7 +76,7 @@ public class FileTaskManager extends InMemoryTaskManager {
                 String line = br.readLine();
 
                 if (!isTitle) {
-                    this.fillSubtasks(line);
+                    this._fillSubtasks(line);
                 }
 
                 if (isTitle) {
@@ -79,7 +88,11 @@ public class FileTaskManager extends InMemoryTaskManager {
         }
     }
 
-    private void fillSubtasks(String line) throws IOException {
+    public void fillSubtasks(String line) throws IOException {
+        this._fillSubtasks(line);
+    }
+
+    private void _fillSubtasks(String line) throws IOException {
         String[] columns = line.split(",");
         String name = CommonUtil.prepareString(columns[2]);
         String description = CommonUtil.prepareString(columns[4]);
