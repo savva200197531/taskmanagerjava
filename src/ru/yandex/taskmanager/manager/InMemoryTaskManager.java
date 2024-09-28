@@ -6,6 +6,8 @@ import ru.yandex.taskmanager.task.Task;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,5 +99,11 @@ public class InMemoryTaskManager implements IManager {
         Task epic = this.getTaskById(epicId);
         epic.setStatus(epicStatus);
         this.updateTask(epic);
+    }
+
+    public List<Task> getSortedByPriority() {
+        Comparator<Task> comparator = (task1, task2) -> task1.getStartTime().compareTo(task2.getStartTime());
+
+        return this.tasks.values().stream().sorted(comparator).collect(Collectors.toList());
     }
 }

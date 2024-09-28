@@ -28,7 +28,7 @@ public class Main {
                 "Нужно починить мопед сломалось колесо",
                 fileTaskManager.getCurrentId(),
                 TaskType.TASK,
-                LocalDateTime.of(2024, 9, 29, 0, 0),
+                LocalDateTime.of(2025, 9, 29, 0, 0),
                 Duration.ofMinutes(120)
         );
         fileTaskManager.addTask(task);
@@ -38,10 +38,13 @@ public class Main {
         );
         fileTaskManager.addTask(epic);
         Task subTask = new SubTask("подзадача в мастерской", "описание задачи", fileTaskManager.getCurrentId(), 1, TaskType.SUB_TASK,
-                LocalDateTime.of(2024, 10, 1, 12, 0),
+                LocalDateTime.of(2023, 10, 1, 12, 0),
                 Duration.ofMinutes(1200)
         );
         fileTaskManager.addTask(subTask);
+
+        System.out.println(fileTaskManager.getSortedByPriority());
+
 //        Task subTask1 = new SubTask("подзадача в мастерской", "описание задачи", fileTaskManager.getCurrentId(), 1, TaskType.SUB_TASK);
 //        fileTaskManager.addTask(subTask1);
 //        Task subTask2 = new SubTask("подзадача в мастерской", "описание задачи", fileTaskManager.getCurrentId(), 1, TaskType.SUB_TASK);
