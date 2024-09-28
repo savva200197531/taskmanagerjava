@@ -16,6 +16,6 @@ public final class Managers {
     };
 
     public static FileTaskManager getDefaultFile(HistoryManager historyManager) throws IOException {
-        return new FileTaskManager(historyManager, null);
+        return new FileTaskManager(historyManager);
     };
 }

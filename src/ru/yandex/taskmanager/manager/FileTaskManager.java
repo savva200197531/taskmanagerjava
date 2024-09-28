@@ -6,10 +6,14 @@ import ru.yandex.taskmanager.task.Epic;
 import ru.yandex.taskmanager.task.SubTask;
 import ru.yandex.taskmanager.task.Task;
 import ru.yandex.taskmanager.utils.CommonUtil;
+import ru.yandex.taskmanager.utils.DateUtils;
 
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class FileTaskManager extends InMemoryTaskManager {
@@ -20,6 +24,15 @@ public class FileTaskManager extends InMemoryTaskManager {
         super(historyManager);
 
         this.filePath = filePath.isEmpty() ? "src/ru/yandex/taskmanager/filedb/task.csv" : filePath;
+        this.tasksFile = Paths.get(this.filePath);
+
+        getTasksFromFile();
+    }
+
+    public FileTaskManager(HistoryManager historyManager) throws IOException {
+        super(historyManager);
+
+        this.filePath = "src/ru/yandex/taskmanager/filedb/task.csv";
         this.tasksFile = Paths.get(this.filePath);
 
         getTasksFromFile();
@@ -56,7 +69,7 @@ public class FileTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (Writer fileWriter = new FileWriter(filePath)) {
-            fileWriter.write("id,type,name,status,description,epic\n");
+            fileWriter.write("id,type,name,status,description,startTime,duration,epic\n");
 
             for (Task task: tasks.values()) {
                 fileWriter.write(task.toString());
@@ -99,19 +112,21 @@ public class FileTaskManager extends InMemoryTaskManager {
         int id = Integer.parseInt(CommonUtil.prepareString(columns[0]));
         TaskStatus status = TaskStatus.valueOf(CommonUtil.prepareString(columns[3]));
         TaskType type = TaskType.valueOf(CommonUtil.prepareString(columns[1]));
+        LocalDateTime startTime = LocalDateTime.parse(CommonUtil.prepareString(columns[5]), DateUtils.formatter);
+        Duration duration = Duration.ofMinutes(Integer.parseInt(CommonUtil.prepareString(columns[6])));
 
         switch (type) {
             case TASK:
-                Task task = new Task(name, description, id, type, status);
+                Task task = new Task(name, description, id, type, status, startTime, duration);
                 this.addTask(task);
                 break;
             case EPIC:
-                Epic epic = new Epic(name, description, id, type, status);
+                Epic epic = new Epic(name, description, id, type, status, startTime, duration);
                 this.addTask(epic);
                 break;
             case SUB_TASK:
-                int parentId = Integer.parseInt(CommonUtil.prepareString(columns[5]));
-                SubTask subTask = new SubTask(name, description, id, parentId, type, status);
+                int parentId = Integer.parseInt(CommonUtil.prepareString(columns[7]));
+                SubTask subTask = new SubTask(name, description, id, parentId, type, status, startTime, duration);
                 this.addTask(subTask);
                 break;
         }
